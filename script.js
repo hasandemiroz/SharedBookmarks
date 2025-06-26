@@ -8,12 +8,6 @@ let currentUser = null;
 
 function populateUserDropdown() {
   const userIds = getUserIds();
-  // userIds.forEach((id) => {
-  //   const option = document.createElement("option");
-  //   option.value = id;
-  //   option.textContent = `User ${id}`;
-  //   userSelect.appendChild(option);
-  // });
   
   // Add default placeholder option
 const placeholder = document.createElement("option");
@@ -119,12 +113,23 @@ function handleFormSubmit(event) {
 userSelect.addEventListener("change", () => {
   const userId = userSelect.value;
   if (userId) {
+    currentUser = userId; 
     renderBookmarks(userId);
+    // Enable form inputs now that a user is selected
+    bookmarkForm.querySelectorAll("input, textarea, button").forEach((el) => {
+      el.disabled = false;
+    });
+
   }
 });
 
 bookmarkForm.addEventListener("submit", handleFormSubmit);
 
 window.addEventListener("load", () => {
-  populateUserDropdown();
+   populateUserDropdown();
+
+  // Disable form inputs initially
+  bookmarkForm.querySelectorAll("input, textarea, button").forEach((el) => {
+    el.disabled = true;
+  });
 });
